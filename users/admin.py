@@ -12,7 +12,7 @@ from .models import Account
 class UserAdmin(UserAdmin):
     form = UserChangeForm
     model = Account
-    list_display = ['email', 'username', ]
+    list_display = ['email', 'company_name', 'first_name', 'last_name']
 
     fieldsets = (
         (None, {'fields': ('username', 'password')}),
