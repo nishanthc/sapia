@@ -5,12 +5,12 @@ from django.contrib import admin
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
-from .forms import UserCreationForm, UserChangeForm
+from .forms import AccountChangeForm
 from .models import Account
 
 
 class UserAdmin(UserAdmin):
-    form = UserChangeForm
+    form = AccountChangeForm
     model = Account
     list_display = ['email', 'company_name', 'first_name', 'last_name']
 

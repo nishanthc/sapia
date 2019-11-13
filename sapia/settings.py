@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'django_countries',
+    'crispy_forms',
     # Local
     'users',
     'pages'
@@ -143,6 +144,7 @@ AUTHENTICATION_BACKENDS = (
 
 SITE_ID = 1
 
+# All Auth
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = False
@@ -151,3 +153,11 @@ ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_UNIQUE_EMAIL = True
 LOGIN_REDIRECT_URL = 'home'
 ACCOUNT_LOGOUT_REDIRECT_URL = 'home'
+ACCOUNT_FORMS = {
+'signup': 'users.forms.AccountSignupForm',
+}
+ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = True
+
+# Crispy Forms
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
