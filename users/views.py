@@ -21,10 +21,4 @@ class ProfileView(UpdateView):
 
     def form_valid(self, form):
         messages.add_message(self.request, messages.INFO, 'Profile successfully updated')
-
         return super(ProfileView, self).form_valid(form)
-
-    def send_mail(self, valid_data):
-        # Send mail logic
-        print(valid_data)
-        pass
