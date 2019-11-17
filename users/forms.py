@@ -4,6 +4,7 @@ from crispy_forms.layout import Layout, Row, Column, Submit, HTML
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.forms import ModelForm, CheckboxSelectMultiple
+from jsonschema import ValidationError
 
 from .models import Account, Merchant, Purchaser
 
@@ -114,6 +115,12 @@ class MerchantCreationForm(ModelForm):
             'category',
             Submit('submit', 'Save')
         )
+
+    def clean(self):
+        category = self.cleaned_data.get('category')
+        if category and category.count() > 7:
+            raise forms.ValidationError("You cannot choose more than 7 categories for your products.")
+        return self.cleaned_data
 
 class PurchaserCreationForm(ModelForm):
     class Meta:
