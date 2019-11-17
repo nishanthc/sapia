@@ -5,10 +5,10 @@ from django.contrib import admin
 from shop.models import Category
 
 
-class CategoryAdmin(SortableAdminMixin,admin.ModelAdmin):
+class CategoryAdmin(SortableAdminMixin, admin.ModelAdmin):
     model = Category
     list_display = ['name']
     exclude = ('slug',)
 
 
-admin.site.register(Category,CategoryAdmin)
+admin.site.register(Category, CategoryAdmin)

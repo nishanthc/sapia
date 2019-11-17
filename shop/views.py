@@ -7,7 +7,6 @@ from shop.models import Category
 
 
 class CategoryDetailView(DetailView):
-
     model = Category
 
     def get_context_data(self, **kwargs):
