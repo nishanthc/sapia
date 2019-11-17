@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'django_countries',
     'crispy_forms',
+    'adminsortable2',
     # Local
     'users',
     'shop',

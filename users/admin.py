@@ -1,3 +1,4 @@
+from adminsortable2.admin import SortableAdminMixin
 from django.contrib import admin
 
 # Register your models here.
@@ -79,7 +80,7 @@ class PurchaserAdmin(admin.ModelAdmin):
 admin.site.register(Purchaser, PurchaserAdmin)
 
 
-class ReferralSourceAdmin(admin.ModelAdmin):
+class ReferralSourceAdmin(SortableAdminMixin, admin.ModelAdmin):
     model = ReferralSource
     list_display = ['name']
 
@@ -87,7 +88,7 @@ class ReferralSourceAdmin(admin.ModelAdmin):
 admin.site.register(ReferralSource, ReferralSourceAdmin)
 
 
-class StoreTypeAdmin(admin.ModelAdmin):
+class StoreTypeAdmin(SortableAdminMixin, admin.ModelAdmin):
     model = StoreType
     list_display = ['name']
 

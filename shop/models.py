@@ -11,7 +11,16 @@ class Category(TimeStampedModel):
         "name",
         max_length=1024
     )
+
     slug = models.SlugField(unique=True, blank=True)
+    order = models.PositiveIntegerField(
+        default=0,
+        blank=False,
+        null=False
+    )
+
+    class Meta:
+        ordering = ['order']
 
     def save(self, *args, **kwargs):
         self.slug = self.slug or slugify(self.name)

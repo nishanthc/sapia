@@ -14,6 +14,14 @@ class ReferralSource(TimeStampedModel):
         "name",
         max_length=1024
     )
+    order = models.PositiveIntegerField(
+        default=0,
+        blank=False,
+        null=False
+    )
+
+    class Meta:
+        ordering = ['order']
 
     def __str__(self):
         return self.name.capitalize()
@@ -104,7 +112,7 @@ class Merchant(TimeStampedModel):
         null=True
     )
 
-    store_name  = models.CharField(
+    store_name = models.CharField(
         "Store name",
         max_length=1024,
         null=True
@@ -121,11 +129,20 @@ class Merchant(TimeStampedModel):
         related_name="merchants",
     )
 
+
 class StoreType(TimeStampedModel):
     name = models.CharField(
         "name",
         max_length=1024
     )
+    order = models.PositiveIntegerField(
+        default=0,
+        blank=False,
+        null=False
+    )
+
+    class Meta:
+        ordering = ['order']
 
     def __str__(self):
         return self.name.capitalize()
