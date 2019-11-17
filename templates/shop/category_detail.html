@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+ <h1>{{ object }} Merchants</h1>
+{% for merchant in object.merchants.all %}
+    {{ merchant.store_name }}
+{% endfor %}
+{% endblock %}

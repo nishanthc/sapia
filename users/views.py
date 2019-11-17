@@ -37,7 +37,7 @@ class MerchantCreateView(CreateView):
             return super(MerchantCreateView, self).form_invalid(form)
         form.instance.account = self.request.user
         messages.add_message(self.request, messages.SUCCESS, 'Merchant successfully created')
-        return super(MerchantCreateView, self).form_valid(form)
+        HttpResponseRedirect(reverse('account_update_merchant'))
 
     def get(self, request, *args, **kwargs):
         if not request.user.company_name:
