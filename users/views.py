@@ -41,7 +41,8 @@ class MerchantCreateView(CreateView):
 
     def get(self, request, *args, **kwargs):
         if not request.user.company_name:
-            messages.add_message(self.request, messages.ERROR, 'You must complete your profile before you can use Sapia')
+            messages.add_message(self.request, messages.ERROR,
+                                 'You must complete your profile before you can use become a merchant.')
             return HttpResponseRedirect(reverse('account_profile'))
         return super(MerchantCreateView, self).get(request, *args, **kwargs)
 
@@ -59,10 +60,9 @@ class MerchantUpdateView(UpdateView):
         messages.add_message(self.request, messages.INFO, 'Merchant account successfully updated')
         return super(MerchantUpdateView, self).form_valid(form)
 
-
     def get(self, request, *args, **kwargs):
-        if not request.user.company_name:
-            messages.add_message(self.request, messages.ERROR, 'You must complete your profile before you can use Sapia')
-            return HttpResponseRedirect(reverse('account_profile'))
+        if request.user.merchant.id is None:
+            messages.add_message(self.request, messages.ERROR,
+                                 'You must first create a merchant account')
+            return HttpResponseRedirect(reverse('account_create_merchant'))
         return super(MerchantUpdateView, self).get(request, *args, **kwargs)
-
