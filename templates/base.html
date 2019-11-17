@@ -32,6 +32,15 @@
                 <a class="nav-link" href="/">Home </a>
             </li>
             {% if user.is_authenticated %}
+                {% if user.purchaser.id %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'account_update_purchaser' %}">Purchaser</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'account_create_purchaser' %}">Become a Purchaser</a>
+                    </li>
+                {% endif %}
                 {% if user.merchant.id %}
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'account_update_merchant' %}">Merchant</a>

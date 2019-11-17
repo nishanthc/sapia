@@ -6,7 +6,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
 from .forms import AccountChangeForm
-from .models import Account, Merchant, ReferralSource
+from .models import Account, Merchant, ReferralSource, StoreType
 
 
 class UserAdmin(UserAdmin):
@@ -56,6 +56,7 @@ class MerchantAdmin(admin.ModelAdmin):
 
 admin.site.register(Merchant, MerchantAdmin)
 
+
 class ReferralSourceAdmin(admin.ModelAdmin):
     model = ReferralSource
     list_display = ['name']
@@ -63,3 +64,10 @@ class ReferralSourceAdmin(admin.ModelAdmin):
 
 admin.site.register(ReferralSource, ReferralSourceAdmin)
 
+
+class StoreTypeAdmin(admin.ModelAdmin):
+    model = StoreType
+    list_display = ['name']
+
+
+admin.site.register(StoreType, StoreTypeAdmin)

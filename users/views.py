@@ -7,8 +7,8 @@ from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
 from django.views.generic import UpdateView, CreateView
 
-from users.forms import ProfileChangeForm, MerchantCreationForm
-from users.models import Account, Merchant
+from users.forms import ProfileChangeForm, MerchantCreationForm, PurchaserCreationForm
+from users.models import Account, Merchant, Purchaser
 
 
 class ProfileView(UpdateView):
@@ -64,3 +64,45 @@ class MerchantUpdateView(UpdateView):
     def form_valid(self, form):
         messages.add_message(self.request, messages.INFO, 'Merchant account successfully updated')
         return super(MerchantUpdateView, self).form_valid(form)
+
+
+class PurchaserCreateView(CreateView):
+    model = Purchaser
+    form_class = PurchaserCreationForm
+    template_name = 'account/purchaser_create.html'
+    success_url = reverse_lazy('account_create_purchaser')
+
+    def form_valid(self, form):
+        if Purchaser.objects.filter(account_id=self.request.user.id).exists():
+            messages.add_message(self.request, messages.ERROR, 'You already have a purchaser account!')
+            return super(PurchaserCreateView, self).form_invalid(form)
+        form.instance.account = self.request.user
+        messages.add_message(self.request, messages.SUCCESS, 'Purchaser successfully created')
+        return super(PurchaserCreateView, self).form_valid(form)
+
+    def get(self, request, *args, **kwargs):
+        if not request.user.company_name:
+            messages.add_message(self.request, messages.ERROR,
+                                 'You must complete your profile before you can use become a purchaser.')
+            return HttpResponseRedirect(reverse('account_profile'))
+        return super(PurchaserCreateView, self).get(request, *args, **kwargs)
+
+
+class PurchaserUpdateView(UpdateView):
+    model = Purchaser
+    form_class = PurchaserCreationForm
+    template_name = 'account/purchaser_update.html'
+    success_url = reverse_lazy('account_update_purchaser')
+
+    def get_object(self, queryset=None):
+        if not hasattr(self.request.user, 'purchaser'):
+            messages.add_message(self.request, messages.ERROR,
+                                 'You must first create a purchaser account')
+            HttpResponseRedirect(reverse('account_create_purchaser'))
+        else:
+            return self.request.user.purchaser
+
+    def form_valid(self, form):
+        messages.add_message(self.request, messages.INFO, 'Purchaser account successfully updated')
+        return super(PurchaserUpdateView, self).form_valid(form)
+

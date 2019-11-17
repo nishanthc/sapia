@@ -5,7 +5,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.forms import ModelForm, CheckboxSelectMultiple
 
-from .models import Account, Merchant
+from .models import Account, Merchant, Purchaser
 
 
 class AccountSignupForm(SignupForm):
@@ -111,6 +111,34 @@ class MerchantCreationForm(ModelForm):
                          <hr>
                          <p><h4>Your Products</h4></p>
                      """),
+            'category',
+            Submit('submit', 'Save')
+        )
+
+class PurchaserCreationForm(ModelForm):
+    class Meta:
+        model = Purchaser
+        fields = ('store_type', 'category')
+        widgets = {
+            'category': CheckboxSelectMultiple,
+            'store_type': CheckboxSelectMultiple
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['category'].label = "Products you'd like to purchase"
+        self.helper = FormHelper()
+        self.helper.layout = Layout(
+            HTML("""
+                   <hr>
+                   <p><h4>Business Details</h4></p>
+               """),
+            'store_type',
+            HTML("""
+                         <hr>
+                         <p><h4>Sourcing</h4></p>
+                     """),
+
             'category',
             Submit('submit', 'Save')
         )

@@ -106,5 +106,32 @@ class Merchant(TimeStampedModel):
 
     category = models.ManyToManyField(
         Category,
-        related_name="categories",
+        related_name="merchants",
+    )
+
+class StoreType(TimeStampedModel):
+    name = models.CharField(
+        "name",
+        max_length=1024
+    )
+
+    def __str__(self):
+        return self.name.capitalize()
+
+
+class Purchaser(TimeStampedModel):
+    account = models.OneToOneField(
+        Account,
+        related_name="purchasers",
+        on_delete=models.CASCADE,
+
+    )
+    store_type = models.ManyToManyField(
+        StoreType,
+        related_name="purchasers",
+    )
+
+    category = models.ManyToManyField(
+        Category,
+        related_name="purchasers",
     )
