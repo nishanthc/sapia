@@ -78,10 +78,9 @@ class Account(AbstractUser):
 
 class Merchant(TimeStampedModel):
     account = models.ForeignKey(
-        "Account",
         Account,
+        related_name="merchant",
         on_delete=models.CASCADE,
-        related_name="merchant"
 
     )
     stockers_count = models.CharField(
