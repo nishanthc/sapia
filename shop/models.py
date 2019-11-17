@@ -18,7 +18,7 @@ class Category(TimeStampedModel):
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return self.name.capitalize()
+        return self.name.title()
 
     def get_absolute_url(self):
         return reverse('category-detail', kwargs={'slug': self.slug})
