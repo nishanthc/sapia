@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 import os
 
 import environ
+from django.contrib import messages
 
 env = environ.Env(
     # set casting, default value
@@ -162,3 +163,11 @@ ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = True
 # Crispy Forms
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+# Bootstrap alerts
+MESSAGE_TAGS = {
+    messages.ERROR: 'danger',
+    messages.SUCCESS: 'success',
+    messages.INFO: 'info',
+
+}

@@ -1,4 +1,5 @@
 from django.contrib.auth.models import AbstractUser
+from django.core.exceptions import ValidationError
 from django.db import models
 
 # Create your models here.
@@ -77,7 +78,7 @@ class Account(AbstractUser):
 
 
 class Merchant(TimeStampedModel):
-    account = models.ForeignKey(
+    account = models.OneToOneField(
         Account,
         related_name="merchant",
         on_delete=models.CASCADE,

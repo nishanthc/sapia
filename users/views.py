@@ -4,10 +4,10 @@ from django.shortcuts import render
 
 # Create your views here.
 from django.urls import reverse_lazy
-from django.views.generic import UpdateView
+from django.views.generic import UpdateView, CreateView
 
-from users.forms import ProfileChangeForm
-from users.models import Account
+from users.forms import ProfileChangeForm, MerchantCreationForm
+from users.models import Account, Merchant
 
 
 class ProfileView(UpdateView):
@@ -22,3 +22,20 @@ class ProfileView(UpdateView):
     def form_valid(self, form):
         messages.add_message(self.request, messages.INFO, 'Profile successfully updated')
         return super(ProfileView, self).form_valid(form)
+
+
+class MerchantCreateView(CreateView):
+    model = Merchant
+    form_class = MerchantCreationForm
+    template_name = 'account/merchant_create.html'
+    success_url = reverse_lazy('account_create_merchant')
+
+
+    def form_valid(self, form):
+        if Merchant.objects.filter(account_id=self.request.user.id).exists():
+            messages.add_message(self.request, messages.ERROR, 'You already have a merchant account!')
+            return super(MerchantCreateView, self).form_invalid(form)
+        form.instance.account = self.request.user
+        messages.add_message(self.request, messages.SUCCESS, 'Merchant successfully created')
+
+        return super(MerchantCreateView, self).form_valid(form)

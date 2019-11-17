@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <h2>Become a Merchant</h2>
+    <form method="post">
+        {% csrf_token %}
+        {% crispy form %}
+    </form>
+{% endblock %}

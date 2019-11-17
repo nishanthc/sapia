@@ -5,7 +5,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.forms import ModelForm
 
-from .models import Account
+from .models import Account, Merchant
 
 
 class AccountSignupForm(SignupForm):
@@ -35,9 +35,10 @@ class ProfileChangeForm(ModelForm):
     class Meta:
         model = Account
         fields = (
-        'first_name', 'last_name', 'company_name', 'website_url', 'tel_number', 'mob_number', "address1", 'address2',
-        'zip_code', 'city',
-        'country', 'story', 'referral_source')
+            'first_name', 'last_name', 'company_name', 'website_url', 'tel_number', 'mob_number', "address1",
+            'address2',
+            'zip_code', 'city',
+            'country', 'story', 'referral_source')
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -85,5 +86,23 @@ class ProfileChangeForm(ModelForm):
             'country',
             'story',
             'referral_source',
+            Submit('submit', 'Save')
+        )
+
+
+class MerchantCreationForm(ModelForm):
+    class Meta:
+        model = Merchant
+        fields = ('stockers_count',)
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.layout = Layout(
+            HTML("""
+                   <hr>
+                   <p><h4>Business Details</h4></p>
+               """),
+            'stockers_count',
             Submit('submit', 'Save')
         )
