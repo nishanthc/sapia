@@ -104,6 +104,18 @@ class Merchant(TimeStampedModel):
         null=True
     )
 
+    store_name  = models.CharField(
+        "Store name",
+        max_length=1024,
+        null=True
+    )
+
+    store_description = models.CharField(
+        "Store name",
+        max_length=1024,
+        null=True
+    )
+
     category = models.ManyToManyField(
         Category,
         related_name="merchants",
