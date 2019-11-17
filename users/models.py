@@ -122,7 +122,7 @@ class StoreType(TimeStampedModel):
 class Purchaser(TimeStampedModel):
     account = models.OneToOneField(
         Account,
-        related_name="purchasers",
+        related_name="purchaser",
         on_delete=models.CASCADE,
 
     )

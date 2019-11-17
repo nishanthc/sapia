@@ -85,6 +85,12 @@ class PurchaserCreateView(CreateView):
             messages.add_message(self.request, messages.ERROR,
                                  'You must complete your profile before you can use become a purchaser.')
             return HttpResponseRedirect(reverse('account_profile'))
+        if hasattr(self.request.user, 'purchaser'):
+
+            print("test")
+            messages.add_message(self.request, messages.ERROR,
+                                 'You already have a purchaser account!')
+            return HttpResponseRedirect(reverse('account_update_purchaser'))
         return super(PurchaserCreateView, self).get(request, *args, **kwargs)
 
 
