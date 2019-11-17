@@ -9,6 +9,16 @@ from django_extensions.db.models import TimeStampedModel
 from shop.models import Category
 
 
+class ReferralSource(TimeStampedModel):
+    name = models.CharField(
+        "name",
+        max_length=1024
+    )
+
+    def __str__(self):
+        return self.name.capitalize()
+
+
 class Account(AbstractUser):
     company_name = models.CharField(
         "Company Name",
@@ -69,10 +79,12 @@ class Account(AbstractUser):
         blank=True
     )
 
-    referral_source = models.TextField(
-        "Referral Source",
-        max_length=1024,
-        blank=True
+    referral_source = models.OneToOneField(
+        ReferralSource,
+        related_name="accounts",
+        on_delete=models.CASCADE,
+        null=True
+
     )
 
     def __str__(self):
