@@ -111,7 +111,7 @@ class Merchant(TimeStampedModel):
     )
 
     store_description = models.CharField(
-        "Store name",
+        "Store description",
         max_length=1024,
         null=True
     )
