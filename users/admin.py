@@ -48,10 +48,10 @@ class UserAdmin(UserAdmin):
 
 admin.site.register(Account, UserAdmin)
 
+
 class MerchantAdmin(admin.ModelAdmin):
     model = Merchant
-    list_display = ['account','stockers_count']
+    list_display = ['account', 'stockers_count']
+
 
 admin.site.register(Merchant, MerchantAdmin)
-
-

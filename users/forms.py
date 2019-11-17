@@ -3,7 +3,7 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Row, Column, Submit, HTML
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
-from django.forms import ModelForm
+from django.forms import ModelForm, CheckboxSelectMultiple
 
 from .models import Account, Merchant
 
@@ -93,7 +93,10 @@ class ProfileChangeForm(ModelForm):
 class MerchantCreationForm(ModelForm):
     class Meta:
         model = Merchant
-        fields = ('stockers_count',)
+        fields = ('stockers_count', 'category')
+        widgets = {
+            'category': CheckboxSelectMultiple
+        }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -104,5 +107,10 @@ class MerchantCreationForm(ModelForm):
                    <p><h4>Business Details</h4></p>
                """),
             'stockers_count',
+            HTML("""
+                         <hr>
+                         <p><h4>Your Products</h4></p>
+                     """),
+            'category',
             Submit('submit', 'Save')
         )

@@ -6,6 +6,8 @@ from django.db import models
 from django_countries.fields import CountryField
 from django_extensions.db.models import TimeStampedModel
 
+from shop.models import Category
+
 
 class Account(AbstractUser):
     company_name = models.CharField(
@@ -88,4 +90,9 @@ class Merchant(TimeStampedModel):
         "Stores stocking products",
         max_length=1024,
         null=True
+    )
+
+    category = models.ManyToManyField(
+        Category,
+        related_name="categories",
     )
