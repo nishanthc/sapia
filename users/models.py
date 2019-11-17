@@ -76,9 +76,10 @@ class Account(AbstractUser):
         return self.email
 
 
-class Merchant():
-    company_name = models.CharField(
-        "Company Name",
-        max_length=100,
-        null=True
+class Merchant(TimeStampedModel):
+    account = models.ForeignKey(
+        Account,
+        on_delete=models.CASCADE
+
     )
+

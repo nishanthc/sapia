@@ -4,7 +4,6 @@
     <h2>Profile</h2>
     <form method="post">
         {% csrf_token %}
-        {{ form|crispy }}
-        <button type="submit">Save</button>
+        {% crispy form %}
     </form>
 {% endblock %}
