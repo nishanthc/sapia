@@ -94,7 +94,7 @@ class ProfileChangeForm(ModelForm):
 class MerchantCreationForm(ModelForm):
     class Meta:
         model = Merchant
-        fields = ('stockers_count', 'category')
+        fields = ('stockers_count', 'category', 'store_name', 'store_description')
         widgets = {
             'category': CheckboxSelectMultiple
         }
@@ -123,6 +123,7 @@ class MerchantCreationForm(ModelForm):
         if category and category.count() > 7:
             raise forms.ValidationError("You cannot choose more than 7 categories for your products.")
         return self.cleaned_data
+
 
 class PurchaserCreationForm(ModelForm):
     class Meta:
