@@ -6,7 +6,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
 from .forms import AccountChangeForm
-from .models import Account
+from .models import Account, Merchant
 
 
 class UserAdmin(UserAdmin):
@@ -47,3 +47,11 @@ class UserAdmin(UserAdmin):
 
 
 admin.site.register(Account, UserAdmin)
+
+class MerchantAdmin(admin.ModelAdmin):
+    model = Merchant
+    list_display = ['account','stockers_count']
+
+admin.site.register(Merchant, MerchantAdmin)
+
+
