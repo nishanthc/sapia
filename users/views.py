@@ -61,7 +61,7 @@ class MerchantUpdateView(UpdateView):
         return super(MerchantUpdateView, self).form_valid(form)
 
     def get(self, request, *args, **kwargs):
-        if request.user.merchant.id is None:
+        if not request.user.merchant.id:
             messages.add_message(self.request, messages.ERROR,
                                  'You must first create a merchant account')
             return HttpResponseRedirect(reverse('account_create_merchant'))
