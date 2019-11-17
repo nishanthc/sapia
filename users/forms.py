@@ -107,6 +107,8 @@ class MerchantCreationForm(ModelForm):
                    <hr>
                    <p><h4>Business Details</h4></p>
                """),
+            'store_name',
+            'store_description',
             'stockers_count',
             HTML("""
                          <hr>
