@@ -15,47 +15,49 @@ class Account(AbstractUser):
     website_url = models.CharField(
         "Website URL",
         max_length=1024,
-        blank=True
+        blank=True,
+        null=True
     )
 
     tel_number = models.CharField(
         "Telephone Number",
         max_length=13,
-        blank=True
+        null=True
     )
     mob_number = models.CharField(
         "Mobile Number",
         max_length=13,
+        null=True,
         blank=True
     )
 
     address1 = models.CharField(
         "Address line 1",
         max_length=1024,
-        blank=True
+        null=True
 
     )
 
     address2 = models.CharField(
         "Address line 2",
         max_length=1024,
-        blank=True
+        null=True
     )
 
     zip_code = models.CharField(
         "ZIP / Postal code",
         max_length=12,
-        blank=True
+        null=True
     )
 
     city = models.CharField(
         "City",
         max_length=1024,
-        blank=True
+        null=True
     )
 
     country = CountryField(
-        blank=True
+        null=True
     )
 
     story = models.TextField(
@@ -72,3 +74,11 @@ class Account(AbstractUser):
 
     def __str__(self):
         return self.email
+
+
+class Merchant():
+    company_name = models.CharField(
+        "Company Name",
+        max_length=100,
+        null=True
+    )
