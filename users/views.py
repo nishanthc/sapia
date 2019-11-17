@@ -1,9 +1,10 @@
 from django.contrib import messages
 from django.contrib.auth.models import User
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
 
 # Create your views here.
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.views.generic import UpdateView, CreateView
 
 from users.forms import ProfileChangeForm, MerchantCreationForm
@@ -38,6 +39,12 @@ class MerchantCreateView(CreateView):
         messages.add_message(self.request, messages.SUCCESS, 'Merchant successfully created')
         return super(MerchantCreateView, self).form_valid(form)
 
+    def get(self, request, *args, **kwargs):
+        if not request.user.company_name:
+            messages.add_message(self.request, messages.ERROR, 'You must complete your profile before you can use Sapia')
+            return HttpResponseRedirect(reverse('account_profile'))
+        return super(MerchantCreateView, self).get(request, *args, **kwargs)
+
 
 class MerchantUpdateView(UpdateView):
     model = Merchant
@@ -51,3 +58,11 @@ class MerchantUpdateView(UpdateView):
     def form_valid(self, form):
         messages.add_message(self.request, messages.INFO, 'Merchant account successfully updated')
         return super(MerchantUpdateView, self).form_valid(form)
+
+
+    def get(self, request, *args, **kwargs):
+        if not request.user.company_name:
+            messages.add_message(self.request, messages.ERROR, 'You must complete your profile before you can use Sapia')
+            return HttpResponseRedirect(reverse('account_profile'))
+        return super(MerchantUpdateView, self).get(request, *args, **kwargs)
+
