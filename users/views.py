@@ -54,15 +54,13 @@ class MerchantUpdateView(UpdateView):
     success_url = reverse_lazy('account_update_merchant')
 
     def get_object(self, queryset=None):
-        return self.request.user.merchant
+        if not hasattr(self.request.user, 'merchant'):
+            messages.add_message(self.request, messages.ERROR,
+                                 'You must first create a merchant account')
+            HttpResponseRedirect(reverse('account_create_merchant'))
+        else:
+            return self.request.user.merchant
 
     def form_valid(self, form):
         messages.add_message(self.request, messages.INFO, 'Merchant account successfully updated')
         return super(MerchantUpdateView, self).form_valid(form)
-
-    def get(self, request, *args, **kwargs):
-        if not request.user.merchant.id:
-            messages.add_message(self.request, messages.ERROR,
-                                 'You must first create a merchant account')
-            return HttpResponseRedirect(reverse('account_create_merchant'))
-        return super(MerchantUpdateView, self).get(request, *args, **kwargs)
