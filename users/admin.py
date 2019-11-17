@@ -6,7 +6,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
 from .forms import AccountChangeForm
-from .models import Account, Merchant, ReferralSource, StoreType
+from .models import Account, Merchant, ReferralSource, StoreType, Purchaser
 
 
 class UserAdmin(UserAdmin):
@@ -51,10 +51,32 @@ admin.site.register(Account, UserAdmin)
 
 class MerchantAdmin(admin.ModelAdmin):
     model = Merchant
-    list_display = ['account', 'stockers_count']
+    list_display = ['account', 'stockers_count', 'get_categories']
+
+    def get_categories(self, obj):
+        return ", ".join([p.name for p in obj.category.all()])
+
+    get_categories.short_description = 'Categories'
 
 
 admin.site.register(Merchant, MerchantAdmin)
+
+
+class PurchaserAdmin(admin.ModelAdmin):
+    model = Purchaser
+    list_display = ['account', 'get_store_types', 'get_categories']
+
+    def get_store_types(self, obj):
+        return ", ".join([p.name for p in obj.store_type.all()])
+
+    def get_categories(self, obj):
+        return ", ".join([p.name for p in obj.category.all()])
+
+    get_store_types.short_description = 'Store Types'
+    get_categories.short_description = 'Categories'
+
+
+admin.site.register(Purchaser, PurchaserAdmin)
 
 
 class ReferralSourceAdmin(admin.ModelAdmin):
