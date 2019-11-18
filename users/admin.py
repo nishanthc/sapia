@@ -53,8 +53,8 @@ class MerchantAdmin(admin.ModelAdmin):
     list_display = ['account', 'store_name', 'stockers_count', 'get_categories']
     exclude = ('slug',)
 
-
-    def get_categories(self, obj):
+    @staticmethod
+    def get_categories(obj):
         return ", ".join([p.name for p in obj.category.all()])
 
     get_categories.short_description = 'Categories'
@@ -67,10 +67,12 @@ class PurchaserAdmin(admin.ModelAdmin):
     model = Purchaser
     list_display = ['account', 'get_store_types', 'get_categories']
 
-    def get_store_types(self, obj):
+    @staticmethod
+    def get_store_types(obj):
         return ", ".join([p.name for p in obj.store_type.all()])
 
-    def get_categories(self, obj):
+    @staticmethod
+    def get_categories(obj):
         return ", ".join([p.name for p in obj.category.all()])
 
     get_store_types.short_description = 'Store Types'
