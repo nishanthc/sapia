@@ -1,6 +1,4 @@
 from django.urls import path
-
-from shop import views
 from shop.views import CategoryDetailView, MerchantDetailView
 
 app = "shop"
