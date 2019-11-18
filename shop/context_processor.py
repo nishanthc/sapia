@@ -1,7 +1,7 @@
 from shop.models import Category
 
 
-def categories():
+def categories(request):
     return {
         'categories': Category.objects.all()
     }
