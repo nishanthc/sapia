@@ -1,6 +1,4 @@
 from adminsortable2.admin import SortableAdminMixin
-from django.contrib import admin
-
 # Register your models here.
 
 from django.contrib import admin
