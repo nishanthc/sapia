@@ -11,11 +11,20 @@ from django_extensions.db.models import TimeStampedModel
 from shop.models import Category
 
 
-class ReferralSource(TimeStampedModel):
+class NameMixin(models.Model):
     name = models.CharField(
         "name",
         max_length=1024
     )
+
+    class Meta:
+        abstract = True
+
+    def __str__(self):
+        return self.name.capitalize()
+
+
+class ReferralSource(NameMixin, TimeStampedModel):
     order = models.PositiveIntegerField(
         default=0,
         blank=False,
@@ -24,9 +33,6 @@ class ReferralSource(TimeStampedModel):
 
     class Meta:
         ordering = ['order']
-
-    def __str__(self):
-        return self.name.capitalize()
 
 
 class Account(AbstractUser):
@@ -135,6 +141,7 @@ class Merchant(TimeStampedModel):
         unique=True,
         blank=True
     )
+
     def save(self, *args, **kwargs):
         self.slug = self.slug or slugify(self.store_name)
         super().save(*args, **kwargs)
@@ -143,11 +150,7 @@ class Merchant(TimeStampedModel):
         return reverse('merchant-detail', kwargs={'slug': self.slug})
 
 
-class StoreType(TimeStampedModel):
-    name = models.CharField(
-        "name",
-        max_length=1024
-    )
+class StoreType(NameMixin, TimeStampedModel):
     order = models.PositiveIntegerField(
         default=0,
         blank=False,
@@ -156,9 +159,6 @@ class StoreType(TimeStampedModel):
 
     class Meta:
         ordering = ['order']
-
-    def __str__(self):
-        return self.name.capitalize()
 
 
 class Purchaser(TimeStampedModel):
