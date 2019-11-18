@@ -53,6 +53,8 @@ admin.site.register(Account, UserAdmin)
 class MerchantAdmin(admin.ModelAdmin):
     model = Merchant
     list_display = ['account', 'store_name', 'stockers_count', 'get_categories']
+    exclude = ('slug',)
+
 
     def get_categories(self, obj):
         return ", ".join([p.name for p in obj.category.all()])

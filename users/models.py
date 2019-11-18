@@ -3,6 +3,8 @@ from django.core.exceptions import ValidationError
 from django.db import models
 
 # Create your models here.
+from django.urls import reverse
+from django.utils.text import slugify
 from django_countries.fields import CountryField
 from django_extensions.db.models import TimeStampedModel
 
@@ -128,6 +130,17 @@ class Merchant(TimeStampedModel):
         Category,
         related_name="merchants",
     )
+
+    slug = models.SlugField(
+        unique=True,
+        blank=True
+    )
+    def save(self, *args, **kwargs):
+        self.slug = self.slug or slugify(self.store_name)
+        super().save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return reverse('merchant-detail', kwargs={'slug': self.slug})
 
 
 class StoreType(TimeStampedModel):

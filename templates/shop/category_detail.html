@@ -2,8 +2,8 @@
 {% load crispy_forms_tags %}
 {% block content %}
 
- <h1>{{ object }} Merchants</h1>
-{% for merchant in object.merchants.all %}
-    {{ merchant.store_name }}
-{% endfor %}
+    <h1>{{ object }} Merchants</h1>
+    {% for merchant in object.merchants.all %}
+        <a href="{{ merchant.get_absolute_url }}">{{ merchant.store_name }}</a>
+    {% endfor %}
 {% endblock %}
