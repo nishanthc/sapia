@@ -96,6 +96,3 @@ class StoreTypeAdmin(SortableAdminMixin, admin.ModelAdmin):
 
 
 admin.site.register(StoreType, StoreTypeAdmin)
-
-gource --t
-gource --camera-mode track --title "SAPIA Source" --key --stop-at-end --file-idle-time 5 --seconds-per-day 0.1 --auto-skip-seconds 1 -1920x1080 -o - | ffmpeg -y -r 30 -f image2pipe -vcodec ppm -i - -vcodec libx264 -preset ultrafast -pix_fmt yuv420p -crf 1 -threads 0 -bf 0 gource.mp4
