@@ -27,7 +27,7 @@ class MerchantCreateView(CreateView):
     model = Merchant
     form_class = MerchantCreationForm
     template_name = 'account/merchant_create.html'
-    success_url = reverse_lazy('account_create_merchant')
+    success_url = reverse_lazy('account_update_merchant')
 
     def form_valid(self, form):
         if Merchant.objects.filter(account_id=self.request.user.id).exists():
@@ -35,13 +35,14 @@ class MerchantCreateView(CreateView):
             return super(MerchantCreateView, self).form_invalid(form)
         form.instance.account = self.request.user
         messages.add_message(self.request, messages.SUCCESS, 'Merchant successfully created')
-        HttpResponseRedirect(reverse('account_update_merchant'))
+        return super(MerchantCreateView, self).form_valid(form)
 
     def get(self, request, *args, **kwargs):
         if not request.user.company_name:
             messages.add_message(self.request, messages.ERROR,
                                  'You must complete your profile before you can use become a merchant.')
             return HttpResponseRedirect(reverse('account_profile'))
+
         return super(MerchantCreateView, self).get(request, *args, **kwargs)
 
 
@@ -68,7 +69,7 @@ class PurchaserCreateView(CreateView):
     model = Purchaser
     form_class = PurchaserCreationForm
     template_name = 'account/purchaser_create.html'
-    success_url = reverse_lazy('account_create_purchaser')
+    success_url = reverse_lazy('account_update_purchaser')
 
     def form_valid(self, form):
         if Purchaser.objects.filter(account_id=self.request.user.id).exists():
