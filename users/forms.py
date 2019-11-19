@@ -40,9 +40,25 @@ class ProfileChangeForm(ModelForm):
             'zip_code', 'city',
             'country', 'story', 'referral_source')
 
+        required = (
+            'first_name',
+            'last_name',
+            'company_name',
+            'tel_number',
+            'address1',
+            'address2',
+            'zip_code',
+            'city',
+            'country',
+
+        )
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        for field in self.Meta.required:
+            self.fields[field].required = True
         self.helper = FormHelper()
+
         self.helper.layout = Layout(
             HTML("""
                    <hr>
