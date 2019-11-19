@@ -12,6 +12,9 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 
 import os
 
+import django
+import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
 import environ
 from django.contrib import messages
 
@@ -177,3 +180,13 @@ MESSAGE_TAGS = {
     messages.INFO: 'info',
 
 }
+
+
+# Sentry
+try:
+    sentry_sdk.init(
+        dsn=env('SENTRY_DSN'),
+        integrations=[DjangoIntegration()]
+    )
+except django.core.exceptions.ImproperlyConfigured:
+    pass
