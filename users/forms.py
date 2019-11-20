@@ -5,6 +5,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.forms import ModelForm, CheckboxSelectMultiple
 
+from shop.models import Category
 from .models import Account, Merchant, Purchaser
 
 
@@ -116,6 +117,7 @@ class MerchantCreationForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.fields['category'].queryset = Category.objects.filter(primary=True)
         self.helper = FormHelper()
         self.helper.layout = Layout(
             HTML("""
@@ -152,6 +154,8 @@ class PurchaserCreationForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['category'].label = "Products you'd like to purchase"
+        self.fields['category'].queryset = Category.objects.filter(primary=True)
+
         self.helper = FormHelper()
         self.helper.layout = Layout(
             HTML("""
