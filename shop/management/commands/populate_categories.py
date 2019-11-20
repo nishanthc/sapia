@@ -30,4 +30,3 @@ class Command(BaseCommand):
                         new_category.parent = parent_category
                         new_category.save()
                         print(category)
-
