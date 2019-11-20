@@ -9,14 +9,26 @@ from django_extensions.db.models import TimeStampedModel
 class Category(TimeStampedModel):
     name = models.CharField(
         "name",
-        max_length=1024
+        max_length=1024,
+        unique=True
     )
 
-    slug = models.SlugField(unique=True, blank=True)
+    slug = models.SlugField(
+        unique=True,
+        blank=True
+    )
     order = models.PositiveIntegerField(
         default=0,
         blank=False,
         null=False
+    )
+    parent = models.ForeignKey(
+        'category',
+        null=True,
+        on_delete=models.CASCADE
+    )
+    primary = models.BooleanField(
+        null=True
     )
 
     class Meta:

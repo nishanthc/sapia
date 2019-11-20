@@ -7,7 +7,8 @@ from shop.models import Category
 
 class CategoryAdmin(SortableAdminMixin, admin.ModelAdmin):
     model = Category
-    list_display = ['name']
+    search_fields = ['name']
+    list_display = ['name','primary']
     exclude = ('slug',)
 
 
