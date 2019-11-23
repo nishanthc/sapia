@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+    <h1>{{ object.name }} </h1>
+    <h3><a href="{% url 'update-product' object.slug %}">Modify Product</a></h3><br><br>
+
+{% endblock %}

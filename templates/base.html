@@ -51,9 +51,15 @@
                         </li>
                     {% endif %}
                     {% if user.merchant.id %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'account_update_merchant' %}">Merchant</a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown"
+                               aria-haspopup="true" aria-expanded="false">Merchant</a>
+                            <div class="dropdown-menu" aria-labelledby="dropdown01">
+                                <a class="dropdown-item" href="{% url 'account_update_merchant' %}">My Store</a>
+                                <a class="dropdown-item" href="{% url 'account_merchant_products' %}">My Products</a>
+                            </div>
                         </li>
+
                     {% else %}
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'account_create_merchant' %}">Become a Merchant</a>

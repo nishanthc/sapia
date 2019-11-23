@@ -3,8 +3,9 @@ from django.http import HttpResponseRedirect
 
 # Create your views here.
 from django.urls import reverse_lazy, reverse
-from django.views.generic import UpdateView, CreateView
+from django.views.generic import UpdateView, CreateView, ListView
 
+from shop.models import Product
 from users.forms import ProfileChangeForm, MerchantCreationForm, PurchaserCreationForm
 from users.models import Account, Merchant, Purchaser
 
@@ -109,3 +110,12 @@ class PurchaserUpdateView(UpdateView):
     def form_valid(self, form):
         messages.add_message(self.request, messages.INFO, 'Purchaser account successfully updated')
         return super(PurchaserUpdateView, self).form_valid(form)
+
+
+class MerchantProductsListView(ListView):
+    model = Product
+    paginate_by = 20
+    template_name = "account/merchant_products_list.html"
+
+    def get_queryset(self):
+        return Product.objects.filter(merchant__account=self.request.user)
